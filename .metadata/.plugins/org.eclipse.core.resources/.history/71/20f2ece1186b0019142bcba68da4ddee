@@ -1,0 +1,17 @@
+package com.drg.state;
+
+public class StateMenu implements State{
+
+	@Override
+	public void loop() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

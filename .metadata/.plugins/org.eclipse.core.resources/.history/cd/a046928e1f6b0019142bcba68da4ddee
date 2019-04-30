@@ -1,0 +1,17 @@
+package com.drg.state;
+
+import java.util.Stack;
+
+public class StateManager {
+	
+	private Stack<State> stack = new Stack<State>();
+	private State currentState = null;
+	
+	public void setState(State s) {
+		stack.push(s);
+	}
+	
+	public State getState() {return currentState;}
+	public State getPreviousState() {return previousState;}
+
+}

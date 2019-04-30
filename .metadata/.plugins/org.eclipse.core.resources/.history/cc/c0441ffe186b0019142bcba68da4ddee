@@ -1,0 +1,10 @@
+package com.drg.state;
+
+public interface State {
+	
+	public void update();
+	
+	public void draw();
+	
+
+}
