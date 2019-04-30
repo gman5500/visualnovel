@@ -10,7 +10,10 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-public class StateMenu implements State{
+import com.drg.handlers.ResourceHandler;
+import com.drg.main.GamePanel;
+
+public class StateMenu extends State{
 	
 	int posx = 0;
 	int posy = 100;
@@ -29,14 +32,7 @@ public class StateMenu implements State{
 		
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("TimesRoman", Font.PLAIN, 32));
-		BufferedImage bg = null;
-		try {
-			bg = ImageIO.read(new File("resources/img/bg/menu.png"));
-		} catch(IOException e ) {
-			e.printStackTrace();
-		}
-		g.drawImage(bg, 0,0,null);
-		
+		g.drawImage(ResourceHandler.getBackground("menu"), 0,0,null);
 		g.drawString("rylan u are a fucking weeb", posx, posy);
 		
 	}

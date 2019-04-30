@@ -2,11 +2,13 @@ package com.drg.state;
 
 import java.awt.Graphics;
 
-public interface State {
+import com.drg.main.GamePanel;
+
+public abstract class State {
 	
-	public void update();
+	public abstract void update();
 	
-	public void render(Graphics g);
+	public abstract void render(Graphics g);
 	
 
 }
