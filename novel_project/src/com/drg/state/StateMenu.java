@@ -3,15 +3,10 @@ package com.drg.state;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Random;
 
-import javax.imageio.ImageIO;
 
 import com.drg.handlers.ResourceHandler;
-import com.drg.main.GamePanel;
 
 public class StateMenu extends State{
 	

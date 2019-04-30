@@ -1,24 +1,17 @@
 package com.drg.main;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.drg.handlers.ResourceHandler;
 import com.drg.handlers.GameStateManager;
-import com.drg.state.State;
-import com.drg.state.StateMenu;
-import com.drg.state.StateNarrate;
 
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable, KeyListener{
@@ -86,7 +79,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 		double ns = 1000000000/FPS;
 		double delta = 0;
 		long timer = System.currentTimeMillis();
-		int frames = 0;
 		while(running) {
 			long now = System.nanoTime();
 			delta += (now-lastTime)/ns;
@@ -97,11 +89,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 			}
 			render();
 			drawToScreen();
-			frames++;
 			
 			if(System.currentTimeMillis() - timer > 1000) {
 				timer+=1000;
-				frames = 0;
 			}
 		}
 	}
@@ -109,7 +99,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyChar() == 'a') {
-			System.out.println("hmm");
 			test = "fuck";
 		}
 		
@@ -117,17 +106,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_LEFT) {
-			System.out.println("hmm");
-			test = "fuck";
-		}
-		
 	}
 
 }

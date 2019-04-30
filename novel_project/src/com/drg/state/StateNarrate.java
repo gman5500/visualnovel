@@ -1,11 +1,8 @@
 package com.drg.state;
 
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import com.drg.handlers.ResourceHandler;
-import com.drg.main.GamePanel;
 
 public class StateNarrate extends State{
 
