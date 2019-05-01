@@ -49,5 +49,11 @@ public class GameStateManager {
 			getState().keyEventSpace();
 		}
 	}
+	
+	public void keyEventBackSpace() {
+		if(getState() != null) {
+			getState().keyEventBackSpace();
+		}
+	}
 
 }

@@ -18,7 +18,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 	public int width = 1400;
 	public int height = 900;
 	
-	final double FPS = 60.0;
+	final int FPS = 60;
 	public boolean running = false;
 	
 	private Graphics g;
@@ -57,7 +57,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 	}
 	
 	private void render() {
-		g.clearRect(0, 0, width, height);
 		gsm.render(g);
 	}
 	
@@ -71,21 +70,30 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 	public void run() {
 		init();
 		
-		long lastTime = System.nanoTime();
-		double ns = 1000000000/FPS;
-		double delta = 0;
-		long timer = System.currentTimeMillis();
+		long start;
+		long elapsed;
+		long wait;
+		long targetTime = 1000/FPS;
 		while(running) {
-			long now = System.nanoTime();
-			delta += (now-lastTime)/ns;
-			lastTime = now;
+			
+			start = System.nanoTime();
+			
 			update();
 			render();
 			drawToScreen();
 			
-			if(System.currentTimeMillis() - timer > 1000) {
-				timer+=1000;
+			elapsed = System.nanoTime() - start;
+			
+			wait = targetTime - elapsed / 1000000;
+			if(wait < 0) wait = 5;
+			
+			try {
+				Thread.sleep(wait);
 			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			
 		}
 	}
 
@@ -93,6 +101,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_ENTER) {
 			gsm.keyEventSpace();
+		}
+		
+		if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+			gsm.keyEventBackSpace();
 		}
 	}
 

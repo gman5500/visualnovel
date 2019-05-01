@@ -81,6 +81,7 @@ public class ResourceHandler {
 				line = br.readLine();
 			}
 			
+			br.close();
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
@@ -89,10 +90,36 @@ public class ResourceHandler {
 		
 	}
 	
+	private static ArrayList<String> generateLines(String currentLine) {
+		ArrayList<String> paragraph = new ArrayList<String>();
+		if(currentLine.length() <= 105) {
+			paragraph.add(currentLine);
+		} else {
+			String[] words = currentLine.split("\\s+");
+			int i = 0;
+			while(i <= words.length-1) {
+				String line="";
+				while(i<=words.length-1 && line.length() + words[i].length() < 105) {
+					line+=words[i] + " ";
+					if(i<=words.length-1) {
+						i++;
+					}
+				}
+				paragraph.add(line);
+				line="";
+			}
+		}
+		
+		return paragraph;
+	}
+	
 	private static ArrayList<Line> getStory(ArrayList<String> text) {
 		ArrayList<Line> lines = new ArrayList<Line>();
 		for(int i = 0; i < text.size(); i+=3) {
-			lines.add(new Line(text.get(i),text.get(i+1)));
+			ArrayList<String> genLines = generateLines(text.get(i+1));
+			for(String line : genLines) {
+				lines.add(new Line(text.get(i),line));
+			}
 		}
 		
 		return lines;
