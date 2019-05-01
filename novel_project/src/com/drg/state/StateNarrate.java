@@ -6,15 +6,17 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import com.drg.handlers.KeyHandler;
 import com.drg.handlers.ResourceHandler;
 import com.drg.util.Line;
 
 public class StateNarrate extends State{
 	
 	private boolean init = false;
+	private boolean textboxEnabled = true;
 	ArrayList<Line> currentScene;
-	int iterator = 0;
-	int i = 0;
+	private int iterator = 0;
+	private int i = 0;
 	Stack<Integer> previousI = new Stack<Integer>();
 
 	@Override
@@ -23,13 +25,16 @@ public class StateNarrate extends State{
 			init();
 			init = true;
 		}
+		handleInput();
 		
 	}
 
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(ResourceHandler.getBackground("menu"), 0,0,null);
-		createTextBox(g);
+		if(textboxEnabled) {
+			createTextBox(g);
+		}
 		
 	}
 	
@@ -46,18 +51,8 @@ public class StateNarrate extends State{
 			i = internal;
 		}
 	}
-	
-
-
-	@Override
-	public void keyEventSpace() {
-		iterator+=i;
-		previousI.push(i);
-		i=0;
-		
-	}
-
-	@Override
+    
+	@Override  
 	public void init() {
 		currentScene = ResourceHandler.getScene("scene_1");
 	}
@@ -70,10 +65,34 @@ public class StateNarrate extends State{
 		return currentScene.get(iterator).getName();
 	}
 
+	public void keyEventEscape() {
+		textboxEnabled = !textboxEnabled;
+		
+	}
+
 	@Override
-	public void keyEventBackSpace() {
-		iterator-=previousI.peek();
-		previousI.pop();
+	public void handleInput() {
+		
+		if(KeyHandler.isPressed(KeyHandler.HIDE)) {
+			textboxEnabled = !textboxEnabled;
+		}
+		
+		if(KeyHandler.isPressed(KeyHandler.FORWARD)) {
+			if(iterator+i < currentScene.size()) {
+				iterator+=i;
+				previousI.push(i);
+				i=0;
+			}
+		}
+		
+		if(KeyHandler.isPressed(KeyHandler.BACKWARD)) {
+			if(iterator - previousI.peek() >= 0) {
+				iterator-=previousI.peek();
+				if(iterator - previousI.peek() > 0) {
+					previousI.pop();
+				}
+			}
+		}
 		
 	}
 	

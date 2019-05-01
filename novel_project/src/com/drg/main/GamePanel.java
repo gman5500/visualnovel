@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 import com.drg.handlers.ResourceHandler;
 import com.drg.handlers.GameStateManager;
+import com.drg.handlers.KeyHandler;
 
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable, KeyListener{
@@ -54,6 +55,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 	
 	private void update() {
 		gsm.update();
+		KeyHandler.update();
 	}
 	
 	private void render() {
@@ -98,22 +100,14 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 	}
 
 	@Override
-	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_ENTER) {
-			gsm.keyEventSpace();
-		}
-		
-		if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-			gsm.keyEventBackSpace();
-		}
-	}
-
+	public void keyTyped(KeyEvent key) {}
 	@Override
-	public void keyReleased(KeyEvent e) {
+	public void keyPressed(KeyEvent key) {
+		KeyHandler.keySet(key.getKeyCode(), true);
 	}
-
 	@Override
-	public void keyTyped(KeyEvent e) {
+	public void keyReleased(KeyEvent key) {
+		KeyHandler.keySet(key.getKeyCode(), false);
 	}
 
 }

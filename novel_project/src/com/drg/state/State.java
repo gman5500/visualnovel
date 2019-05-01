@@ -5,13 +5,10 @@ import java.awt.Graphics;
 public abstract class State {
 	
 	public abstract void update();
-	
 	public abstract void render(Graphics g);
-	
-	public abstract void keyEventSpace();
-	public abstract void keyEventBackSpace();
-	
 	public abstract void init();
+	
+	public abstract void handleInput();
 	
 
 }
