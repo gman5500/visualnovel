@@ -1,6 +1,5 @@
 package com.drg.main;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -18,7 +17,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 
 	public int width = 1400;
 	public int height = 900;
-	private String test = "fuck pre";
 	
 	final double FPS = 60.0;
 	public boolean running = false;
@@ -61,8 +59,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 	private void render() {
 		g.clearRect(0, 0, width, height);
 		gsm.render(g);
-		g.setColor(Color.BLACK);
-		g.drawString(test, 400, 715);
 	}
 	
 	private void drawToScreen() {
@@ -83,10 +79,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 			long now = System.nanoTime();
 			delta += (now-lastTime)/ns;
 			lastTime = now;
-			while(delta >= 1) {
-				update();
-				delta--;
-			}
+			update();
 			render();
 			drawToScreen();
 			
@@ -98,10 +91,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyChar() == 'a') {
-			test = "fuck";
+		if(e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_ENTER) {
+			gsm.keyEventSpace();
 		}
-		
 	}
 
 	@Override

@@ -8,5 +8,9 @@ public abstract class State {
 	
 	public abstract void render(Graphics g);
 	
+	public abstract void keyEventSpace();
+	
+	public abstract void init();
+	
 
 }
