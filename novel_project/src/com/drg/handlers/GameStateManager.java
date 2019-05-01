@@ -1,6 +1,6 @@
 package com.drg.handlers;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.Stack;
 
 import com.drg.state.State;
@@ -32,7 +32,7 @@ public class GameStateManager {
 		stack.pop();
 	}
 	
-	public void render(Graphics g) {
+	public void render(Graphics2D g) {
 		if(getState() != null) {
 			getState().render(g);
 		}

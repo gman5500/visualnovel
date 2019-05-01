@@ -22,7 +22,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 	final int FPS = 60;
 	public boolean running = false;
 	
-	private Graphics g;
+	private Graphics2D g;
 	private BufferedImage image;
 	
 	private Thread thread;

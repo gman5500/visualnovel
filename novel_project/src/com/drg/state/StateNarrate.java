@@ -1,8 +1,9 @@
 package com.drg.state;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -13,6 +14,8 @@ import com.drg.util.Line;
 public class StateNarrate extends State{
 	
 	private boolean init = false;
+	private boolean fade = true;
+	private float alpha = 1f;
 	private boolean textboxEnabled = true;
 	ArrayList<Line> currentScene;
 	private int iterator = 0;
@@ -26,11 +29,11 @@ public class StateNarrate extends State{
 			init = true;
 		}
 		handleInput();
-		
 	}
 
 	@Override
-	public void render(Graphics g) {
+	public void render(Graphics2D g) {
+		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
 		g.drawImage(ResourceHandler.getBackground("menu"), 0,0,null);
 		if(textboxEnabled) {
 			createTextBox(g);
@@ -38,7 +41,8 @@ public class StateNarrate extends State{
 		
 	}
 	
-	private void createTextBox(Graphics g) {
+	private void createTextBox(Graphics2D g) {
+		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
 		g.drawImage(ResourceHandler.getUI("tbox"), 75, 690, null);
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Calibri", Font.PLAIN, 20));
@@ -74,23 +78,41 @@ public class StateNarrate extends State{
 	public void handleInput() {
 		
 		if(KeyHandler.isPressed(KeyHandler.HIDE)) {
-			textboxEnabled = !textboxEnabled;
+			fade = !fade;
 		}
 		
 		if(KeyHandler.isPressed(KeyHandler.FORWARD)) {
-			if(iterator+i < currentScene.size()) {
-				iterator+=i;
-				previousI.push(i);
-				i=0;
+			if(alpha == 1) {
+				if(iterator+i < currentScene.size()) {
+					iterator+=i;
+					previousI.push(i);
+					i=0;
+				}
 			}
 		}
 		
 		if(KeyHandler.isPressed(KeyHandler.BACKWARD)) {
-			if(iterator - previousI.peek() >= 0) {
-				iterator-=previousI.peek();
-				if(iterator - previousI.peek() > 0) {
-					previousI.pop();
+			if(alpha == 1) {
+				if(iterator - previousI.peek() >= 0) {
+					iterator-=previousI.peek();
+					if(iterator - previousI.peek() > 0) {
+						previousI.pop();
+					}
 				}
+			}
+		}
+		
+		if(fade) {
+			if(alpha < 0.98f) {
+				alpha+=0.03f;
+			} else {
+				alpha = 1f;
+			}
+		} else {
+			if(alpha > 0.03f) {
+				alpha-=0.03f;
+			} else {
+				alpha = 0f;
 			}
 		}
 		

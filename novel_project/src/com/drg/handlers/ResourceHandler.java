@@ -1,6 +1,10 @@
 package com.drg.handlers;
 
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -17,13 +21,32 @@ public class ResourceHandler {
 	
 	/*******************************************************************************************
 	 *                                                                                         *
+	 *                                         MISC                                            * 
+	 *                                                                                         * 
+	 ********************************************************************************************/
+	
+	@SuppressWarnings("unused")
+	private static void loadFonts() {
+		try {
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("resources/fonts/AronGrotesque-light.ttf")));
+			ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("resources/fonts/AronGrotesque-regular.ttf")));
+		} catch(IOException e) {
+			e.printStackTrace();
+		} catch (FontFormatException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/*******************************************************************************************
+	 *                                                                                         *
 	 *                                       IMAGES                                            * 
 	 *                                                                                         * 
 	 ********************************************************************************************/
 	 
 	
-	private static Map<String, Image> bg = new HashMap<String, Image>();
-	private static Map<String, Image> ui = new HashMap<String, Image>();
+	private static Map<String, BufferedImage> bg = new HashMap<String, BufferedImage>();
+	private static Map<String, BufferedImage> ui = new HashMap<String, BufferedImage>();
 	private static Image icon = loadImage("icon/icon.png");
 	
 	public static void load() {
@@ -35,13 +58,15 @@ public class ResourceHandler {
 		
 		//text
 		story.put("scene_1", getStory(loadText("scene_1/scene_1.txt")));
+		
+		//loadFonts();
 	}
 	
-	public static Image getBackground(String key) {
+	public static BufferedImage getBackground(String key) {
 		return bg.get(key);
 	}
 	
-	public static Image getUI(String key) {
+	public static BufferedImage getUI(String key) {
 		return ui.get(key);
 	}
 	
@@ -49,9 +74,9 @@ public class ResourceHandler {
 		return icon;
 	}
 	
-	private static Image loadImage(String path) {
+	private static BufferedImage loadImage(String path) {
 		try {
-		Image i = ImageIO.read(new File("resources/img/" + path));
+		BufferedImage i = ImageIO.read(new File("resources/img/" + path));
 		System.out.println("Successfully loaded /resources/img/"+path);
 		return i;
 		} catch(IOException e) {

@@ -18,5 +18,9 @@ public class Main {
 		window.setIconImage(ResourceHandler.getIcon());
 		window.setVisible(true);
 	}
+	
+	
 
 }
+
+
